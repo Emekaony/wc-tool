@@ -1,5 +1,4 @@
 import 'dart:io';
-import "package:wc_tool/punctuation.dart";
 
 void main(List<String> args) async {
   // step 1: print number of bytes in the file
@@ -8,7 +7,7 @@ void main(List<String> args) async {
 
   if (args.isNotEmpty) {
     command = args[0];
-    File config = File("files/hello.txt");
+    File config = File("files/test.txt");
     switch (command) {
       case "-c":
         // print the number of bytes in the file
@@ -26,28 +25,14 @@ void main(List<String> args) async {
         int count = 0;
         for (String line in lines) {
           List<String> words = line.split(" ");
-          // remove punctuations
           for (String word in words) {
-            // assumt it's not a word
-            bool isWord = false;
-            // because we had things like '****', best way would be to
-            // iterate over every word and see if it's filled up with punctuations
-            // if so, then disregard it, else count it.
-            print("current word is $word");
-            for (int i = 0; i < word.length; i++) {
-              if (!isPunctation(word[i])) {
-                // if we encounter a character, this means we have a valid word
-                // handles edge cases like '[emeka' & '***'
-                isWord = true;
-                break;
-              }
-            }
-            if (isWord) {
+            if (word.isNotEmpty) {
               count++;
             }
           }
         }
         print("$count $fileName");
+        break;
     }
   } else {
     print("Please enter an appropriate command");
